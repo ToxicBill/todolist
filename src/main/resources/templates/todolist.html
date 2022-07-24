@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Todolist</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+  <!-- Bootstrap core CSS -->
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../static/css/bootstrap.min.css"
+        rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link th:href="@{/css/starter-template.css}"
+        href="../static/css/starter-template.css"
+        rel="stylesheet">
+
+  <link th:href="@{/css/dashboard.css}"
+        href="../static/css/dashboard.css"
+        rel="stylesheet">
+
+  <style>
+  </style>
+</head>
+<body>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+  <div class="container-fluid ">
+    <div class="col-sm-9 tasks align-container-center">
+      <div class="task-list">
+        <h1 class="align-items-center">Aufgaben</h1>
+
+        <div>
+          <div><h3 class="text-danger">High Priority</h3></div>
+          <table class="table table-bordered">
+            <thead class="thead-dark">
+              <tr>
+                <th width="25%" scope="col">Beschreibung</th>
+                <th width="15%" scope="col">Priorität</th>
+                <th width="25%" scope="col">Abschlusstermin </th>
+                <th width="10%" scope="col">Abgeschlossen</th>
+                <th width="25%" scope="col">Aktionen</th>
+              </tr>
+            </thead>
+            <tbody class="text-dark">
+            <tr th:each="todos : ${todolist.getHighPriority()}">
+              <td th:text="${todos.getDescription()}"> </td>
+              <td class="text-nowrap" th:text="${todos.getPriority()}"> </td>
+              <td class="text-nowrap" th:text="${#temporals.format(todos.getDuedate(), 'dd-MM-yyyy HH:mm')}"></td>
+              <td class="text-nowrap">
+                <span th:if="${todos.isDone()}">&#10004</span>
+                <span th:unless="${todos.isDone()}">&#10060</span>
+              </td>
+              <td class="text-nowrap">
+                <div class="form-check-inline">
+                  <a class="btn btn-dark" th:href="@{'/todo/' + ${todos.getId()}}">Todo anzeigen</a>
+                  <form method="post" th:method="patch" th:action="@{'/todo/' + ${todos.getId()}}">
+                    <button class="btn btn-success" type="submit">Abschließen</button>
+                  </form>
+                  <form method="post" th:method="delete" th:action="@{'/todo/' + ${todos.getId()}}">
+                    <button class="btn btn-danger" type="submit">Löschen</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+
+
+        <div>
+          <div class="priority medium"><h3 class="text-warning">Medium Priority</h3></div>
+          <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+              <th width="25%" scope="col">Beschreibung</th>
+              <th width="15%" scope="col">Priorität</th>
+              <th width="25%" scope="col">Abschlusstermin </th>
+              <th width="10%" scope="col">Abgeschlossen</th>
+              <th width="25%" scope="col">Aktionen</th>
+            </tr>
+            </thead>
+            <tr th:each="todos : ${todolist.getMediumPriority()}">
+              <td th:text="${todos.getDescription()}"> </td>
+              <td class="text-nowrap" th:text="${todos.getPriority()}"> </td>
+              <td class="text-nowrap" th:text="${#temporals.format(todos.getDuedate(), 'dd-MM-yyyy HH:mm')}"></td>
+              <td class="text-nowrap">
+                <span th:if="${todos.isDone()}">&#10004</span>
+                <span th:unless="${todos.isDone()}">&#10060</span>
+              </td>
+              <td class="text-nowrap">
+                <div class="form-check-inline">
+                  <a class="btn btn-dark" th:href="@{'/todo/' + ${todos.getId()}}">Todo anzeigen</a>
+                  <form method="post" th:method="patch" th:action="@{'/todo/' + ${todos.getId()}}">
+                    <button class="btn btn-success" type="submit">Abschließen</button>
+                  </form>
+                  <form method="post" th:method="delete" th:action="@{'/todo/' + ${todos.getId()}}">
+                    <button class="btn btn-danger" type="submit">Löschen</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+
+        <div>
+          <div class="priority low"><h3 class="text-success">Low Priority</h3></div>
+          <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+              <th width="25%" scope="col">Beschreibung</th>
+              <th width="15%" scope="col">Priorität</th>
+              <th width="25%" scope="col">Abschlusstermin </th>
+              <th width="10%" scope="col">Abgeschlossen</th>
+              <th width="25%" scope="col">Aktionen</th>
+            </tr>
+            </thead>
+            <tr th:each="todos : ${todolist.getLowPriority()}">
+              <td th:text="${todos.getDescription()}"></td>
+              <td class="text-nowrap" th:text="${todos.getPriority()}"></td>
+              <td class="text-nowrap" th:text="${#temporals.format(todos.getDuedate(), 'dd-MM-yyyy HH:mm')}"></td>
+              <td class="text-nowrap">
+                <span th:if="${todos.isDone()}">&#10004</span>
+                <span th:unless="${todos.isDone()}">&#10060</span>
+              </td>
+              <td class="text-nowrap">
+                <div class="form-check-inline">
+                  <a class="btn btn-dark" th:href="@{'/todo/' + ${todos.getId()}}">Todo anzeigen</a>
+                  <form method="post" th:method="patch" th:action="@{'/todo/' + ${todos.getId()}}">
+                    <button class="btn btn-success" type="submit">Abschließen</button>
+                  </form>
+                  <form method="post" th:method="delete" th:action="@{'/todo/' + ${todos.getId()}}">
+                    <button class="btn btn-danger" type="submit">Löschen</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div>
+        <div>
+          <div>
+            <div>
+            </div>
+          </div>
+        </div>
+        <form method="post">
+          <h2>Aufgaben hinzufügen</h2>
+          <div class="form-group">
+            <label>
+              <span>Beschreibung</span>
+              <input class="form-control" type="text" name="description" th:value="*{description}" required>
+            </label>
+          </div>
+          <div class="form-group">
+            <label>
+              <span>Priorität</span>
+              <input class="form-control" type="text" name="priority" th:value="*{priority}" required>
+            </label>
+          </div>
+          <div class="form-group">
+            <label>
+              <span>Zieltermin</span>
+              <input class="form-control" type="datetime-local" name="duedate" th:value="*{duedate}" required>
+            </label>
+          </div>
+          <div>
+            <div>
+              <button type="submit" class="btn btn-dark">Erstellen</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+
+</html>

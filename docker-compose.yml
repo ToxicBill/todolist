@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  application:
+    build: .
+    ports:
+      - 8080:8080
+  database:
+    image: mariadb:10.5.9
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db/seeds/prod:/docker-entrypoint-initdb.d/
+      - ./db/data:/var/lib/mysql
+    environment:
+      - "MYSQL_DATABASE=tododb"
+      - "MYSQL_ROOT_PASSWORD=lepasswort"
